@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export const createUser = async(req, res, next) => {
     try {
@@ -32,6 +33,13 @@ export const login = async(req, res, next) => {
         if(!isExist) return next(errorHandler(404, 'User not found'));
         const isMatched = await bcrypt.compare(password, isExist.password);
         if(!isMatched) return next(errorHandler(400,'Incorrect password'));
+        
+        const isAlreadyLogin = req.cookies.token;
+
+        if(isAlreadyLogin) return next(errorHandler(400,'You are already logged in'));
+
+        const token = jwt.sign({userId:isExist._id}, process.env.SECRET_TOKEN_KEY,{expiresIn:'1h'});
+        res.cookie('token',token,{httpOnly:true, maxAge:3600000});
         return res.status(200).json({message: 'Logged in successfull'});
 
     } catch (error) {
