@@ -32,9 +32,13 @@ const Register = () => {
           navigate('/');
         }, 500);
       }
-
+      else{
+        setLoading(false);
+        toast.error(data.message);
+        return;
+      }
+      
     } catch (error) {
-      setLoading(true);
       toast.error(error.message);
     }
   }
