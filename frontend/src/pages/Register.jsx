@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 const Register = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -15,6 +16,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await fetch('http://localhost:3000/api/user/create',{
         method: 'POST',
         headers: {
@@ -24,6 +26,7 @@ const Register = () => {
       })
       const data = await res.json();
       if(res.ok){
+        setLoading(false);
         toast.success(data.message);
         setTimeout(() => {
           navigate('/');
@@ -31,6 +34,7 @@ const Register = () => {
       }
 
     } catch (error) {
+      setLoading(true);
       toast.error(error.message);
     }
   }
@@ -43,7 +47,11 @@ const Register = () => {
         <input required onChange={handleChange} name='username' type="text" placeholder='john' className='border p-3 rounded-lg' id='username' />
         <input required onChange={handleChange} name='email' type="email" placeholder='john@example.com' className='border p-3 rounded-lg' id='email' />
         <input required onChange={handleChange} name='password' type="password" placeholder='***********' className='border p-3 rounded-lg' id='password' />
-        <button type='submit' className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opcaity-95 disabled:opacity-80'>Register</button>
+        <button disabled={loading} type='submit' className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opcaity-95 disabled:opacity-80'>
+          {
+            loading ? 'loading...' : 'Register'
+          }
+        </button>
       </form>
       <div className='flex gap-2 my-4'>
         <p>Have an account?</p>
