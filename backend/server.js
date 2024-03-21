@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookies from 'cookie-parser';
 import userRouter from './routes/user.route.js';
+import cors from 'cors';
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
@@ -12,6 +13,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookies());
+app.use(cors());
 
 mongoose.connect(MONGO_DB_URL)
     .then(() => console.log('MongoDB connected'))
