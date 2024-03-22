@@ -29,10 +29,11 @@ export const login = async(req, res, next) => {
     try {
         const {email, password} = req.body;
         if(!email || !password) return next(errorHandler(400,'All fields are mandatory'));
+        
         const isExist = await User.findOne({email});
         if(!isExist) return next(errorHandler(404, 'User not found'));
         const isMatched = await bcrypt.compare(password, isExist.password);
-        if(!isMatched) return next(errorHandler(400,'Incorrect password'));
+        if(!isMatched) return next(errorHandler(400,'Email or password not correct'));
         
         const isAlreadyLogin = req.cookies.token;
 

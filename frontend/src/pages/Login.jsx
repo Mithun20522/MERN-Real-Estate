@@ -57,6 +57,12 @@ const Login = () => {
           }
         </button>
       </form>
+      <div className='flex gap-2 my-4'>
+        <p>Don't have an account?</p>
+        <Link to={'/register'}>
+          <span className='text-blue-700 font-semibold hover:underline'>Sign Up</span>
+        </Link>
+      </div>
       <Toaster/>
     </div>
   )

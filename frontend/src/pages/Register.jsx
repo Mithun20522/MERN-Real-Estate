@@ -29,7 +29,7 @@ const Register = () => {
         setLoading(false);
         toast.success(data.message);
         setTimeout(() => {
-          navigate('/');
+          navigate('/login');
         }, 500);
       }
       else{
