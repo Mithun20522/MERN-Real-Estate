@@ -63,7 +63,6 @@ const Register = () => {
           <span className='text-blue-700 font-semibold hover:underline'>Sign in</span>
         </Link>
       </div>
-      <Toaster/>
     </div>
   )
 }

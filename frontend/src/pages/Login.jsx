@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-
 const Login = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
@@ -63,7 +62,6 @@ const Login = () => {
           <span className='text-blue-700 font-semibold hover:underline'>Sign Up</span>
         </Link>
       </div>
-      <Toaster/>
     </div>
   )
 }
